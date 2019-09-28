@@ -121,6 +121,30 @@ function ChangeEmail(login, newEmail) {
     });
 }
 
+function ChangePassword(login, newPassword) {
+  return models.users
+    .updateOne(
+      {
+        login: login
+      },
+      {
+        password: newPassword
+      }
+    )
+    .then(data => {
+      if (data.n == 0) {
+        SENTRY.captureMessage(`User ${login} not found.`);
+        return `User not found.`;
+      } else {
+        SENTRY.captureMessage(`${login}'s password successfully changed.`);
+        return `Password successfully changed.`;
+      }
+    })
+    .catch(err => {
+      SENTRY.captureException('DB password change error: ', err);
+    });
+}
+
 function FindLogin(login) {
   return models.users
     .findOne({
@@ -159,5 +183,6 @@ module.exports = {
   CreateUser,
   GetUser,
   SetEmailVerification,
-  ChangeEmail
+  ChangeEmail,
+  ChangePassword
 };
