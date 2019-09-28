@@ -1,6 +1,6 @@
 # DailyRadioServer
 
-Simple node.js server for radio app.
+Simple node.js server for mobile radio app.
 
 # API
 
@@ -18,7 +18,7 @@ Lines prefixed with:  |  Are sent from:	 |         To:         |
 
 Provide user creation and add it to database.  
 
-```json
+```js
 < POST http://<hostAddress>/user/create
 
 > '<serverResponse>'
@@ -26,7 +26,7 @@ Provide user creation and add it to database.
 
 POST data:
 
-```json
+```js
 {
   "login": "<login>",
   "password": "<password>",
@@ -34,7 +34,7 @@ POST data:
 }
 ```
 
-Where:
+Where:  
 _< hostAddress >_ - address of computer hosting this app.  
 _< login >_ - user's login for authorization.  
 _< password >_ - user's password for authorization.  
@@ -48,13 +48,13 @@ _< serverResponse >_ - confirmation of action:
 
 **Example:**
 
-```json
+```js
 < POST http://localhost/user/create
 ```
 
 POST data:  
 
-```json
+```js
 {
   "login": "Alex",
   "password": "TheBestPassword",
@@ -64,7 +64,7 @@ POST data:
 
 Response:  
 
-```json
+```js
 > 'Successfuly created.'
 ```
 
@@ -72,7 +72,7 @@ Response:
 
 Allows user to change the mail.
 
-```json
+```js
 < POST http://<hostAddress>/user/changeEmail
 
 > '<serverResponse>'
@@ -80,14 +80,14 @@ Allows user to change the mail.
 
 POST data:  
 
-```json
+```js
 {
   "login": "<login>",
   "newEmail": "<newEmail>"
 }
 ```
 
-Where:
+Where:  
 _< hostAddress >_ - address of computer hosting this app.  
 _< login >_ - user's login for authorization.  
 _< newEmail >_ - user's new email.
@@ -99,13 +99,13 @@ _< serverResponse >_ - confirmation of action:
 
 **Example:**
 
-```json
+```js
 < POST http://localhost/user/changeEmail
 ```
 
 POST data:  
 
-```json
+```js
 {
   "login": "Alex",
   "newEmail": "mySecondEmail@mail.com"
@@ -114,7 +114,7 @@ POST data:
 
 Response:  
 
-```json
+```js
 > 'Email successfully changed.'
 ```
 
@@ -122,13 +122,13 @@ Response:
 
 Provides user information.  
 
-```json
+```js
 < POST http://<hostAddress>/user/get
 ```
 
 POST data:  
 
-```json
+```js
 {
   "login": "<login>",
   "password": "<password>",
@@ -137,7 +137,7 @@ POST data:
 
 If user exists (status code 200):  
 
-```json
+```js
 >  {
      "login": "<login>",
      "password": "<password>",
@@ -165,13 +165,13 @@ _< serverResponse >_ - confirmation of action:
 
 **Example:**
 
-```json
+```js
 < POST http://localhost/user/get
 ```
 
 POST data:  
 
-```json
+```js
 {
   "login": "Alex",
   "password": "TheBestPassword",
@@ -180,7 +180,7 @@ POST data:
 
 Response:  
 
-```json
+```js
 >  {
      "login": "Alex",
      "password": "TheBestPassword",
