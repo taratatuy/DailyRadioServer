@@ -18,7 +18,7 @@ Lines prefixed with:  |  Are sent from:	 |         To:         |
 
 Provide user creation and add it to database.  
 
-```js
+```json
 < POST http://<hostAddress>/user/create
 
 > '<serverResponse>'
@@ -26,7 +26,7 @@ Provide user creation and add it to database.
 
 POST data:
 
-```js
+```json
 {
   "login": "<login>",
   "password": "<password>",
@@ -40,15 +40,15 @@ _< login >_ - user's login for authorization.
 _< password >_ - user's password for authorization.  
 _< email >_ - user's email.  
 _< serverResponse >_ - confirmation of action:  
-    - 'Successfuly created.' (status code 200).  
-    - 'Wrong post data.' (status code 400).  
-    - 'Login <login> is already exist.' (status code 422).  
-    - 'Email <email> is already exist.' (status code 422).  
-    - 'Internal Server Error' (status code 500).
+- 'Successfuly created.' (status code 200).  
+- 'Wrong post data.' (status code 400).  
+- 'Login <login> is already exist.' (status code 422).  
+- 'Email <email> is already exist.' (status code 422).  
+- 'Internal Server Error' (status code 500).
 
 **Example:**
 
-```js
+```json
 < POST http://localhost/user/create
 ```
 
@@ -72,7 +72,7 @@ Response:
 
 Allows user to change the mail.
 
-```js
+```json
 < POST http://<hostAddress>/user/changeEmail
 
 > '<serverResponse>'
@@ -80,7 +80,7 @@ Allows user to change the mail.
 
 POST data:  
 
-```js
+```json
 {
   "login": "<login>",
   "newEmail": "<newEmail>"
@@ -92,14 +92,14 @@ _< hostAddress >_ - address of computer hosting this app.
 _< login >_ - user's login for authorization.  
 _< newEmail >_ - user's new email.
 _< serverResponse >_ - confirmation of action:  
-    - 'Email successfully changed.' (status code 200).  
-    - 'Wrong post data.' (status code 400).  
-    - 'User not found.' (status code 422).  
-    - 'Internal Server Error' (status code 500).
+- 'Email successfully changed.' (status code 200).  
+- 'Wrong post data.' (status code 400).  
+- 'User not found.' (status code 422).  
+- 'Internal Server Error' (status code 500).
 
 **Example:**
 
-```js
+```json
 < POST http://localhost/user/changeEmail
 ```
 
@@ -122,13 +122,13 @@ Response:
 
 Provides user information.  
 
-```js
+```json
 < POST http://<hostAddress>/user/get
 ```
 
 POST data:  
 
-```js
+```json
 {
   "login": "<login>",
   "password": "<password>",
@@ -159,13 +159,13 @@ _< password >_ - user's password for authorization.
 _< email >_ - user's email.  
 _< boolean >_ -  true/false - state of email verification.  
 _< serverResponse >_ - confirmation of action:  
-    - 'Wrong post data.' (status code 400).  
-    - 'User not found.' (status code 404).  
-    - 'Internal Server Error' (status code 500).
+- 'Wrong post data.' (status code 400).  
+- 'User not found.' (status code 404).  
+- 'Internal Server Error' (status code 500).
 
 **Example:**
 
-```js
+```json
 < POST http://localhost/user/get
 ```
 
