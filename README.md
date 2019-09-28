@@ -90,7 +90,7 @@ POST data:
 Where:  
 _< hostAddress >_ - address of computer hosting this app.  
 _< login >_ - user's login for authorization.  
-_< newEmail >_ - user's new email.
+_< newEmail >_ - user's new email.  
 _< serverResponse >_ - confirmation of action:  
 - 'Email successfully changed.' (status code 200).  
 - 'Wrong post data.' (status code 400).  
