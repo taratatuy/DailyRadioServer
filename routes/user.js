@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.post('/create', (req, res) => {
   let { login, password, email } = req.body;
-  password = password.toLowerCase();
-  email = email.toLowerCase();
   if (login != undefined && password != undefined && email != undefined) {
+    password = password.toLowerCase();
+    email = email.toLowerCase();
     database
       .CreateUser(login, password, email)
       .then(data => {
@@ -33,8 +33,8 @@ router.post('/create', (req, res) => {
 
 router.post('/changeEmail', (req, res) => {
   let { login, newEmail } = req.body;
-  newEmail = newEmail.toLowerCase();
   if (login != undefined && newEmail != undefined) {
+    newEmail = newEmail.toLowerCase();
     database
       .ChangeEmail(login, newEmail)
       .then(data => {
@@ -58,8 +58,8 @@ router.post('/changeEmail', (req, res) => {
 
 router.post('/changePassword', (req, res) => {
   let { login, newPassword } = req.body;
-  newPassword = newPassword.toLowerCase();
   if (login != undefined && newPassword != undefined) {
+    newPassword = newPassword.toLowerCase();
     database
       .ChangePassword(login, newPassword)
       .then(data => {
@@ -83,20 +83,17 @@ router.post('/changePassword', (req, res) => {
 
 router.post('/get', (req, res) => {
   let { login, password } = req.body;
-  password = password.toLowerCase();
   if (login != undefined && password != undefined) {
+    password = password.toLowerCase();
     database
       .GetUser(login, password)
       .then(data => {
         if (data == 'User not found.') {
           res.status(404);
-          res.end(data);
         } else {
           res.status(200);
-          res.end(
-            `{"login": "${data.login}", "password": "${data.password}", "email": "${data.email}", "verified": "${data.verified}"}`
-          );
         }
+        res.end(data);
       })
       .catch(err => {
         SENTRY.captureException('GetUser POST processing error: ', err);

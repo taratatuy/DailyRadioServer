@@ -23,160 +23,124 @@ new Promise((resolve, reject) => {
   SENTRY.captureException('Database connection error: ', err);
 });
 
-function CreateUser(login, password, email) {
-  return FindLogin(login)
-    .then(foudLogin => {
-      if (foudLogin == 'Login is already exist.') {
-        return Promise.reject(Error(`Login "${login}" is already exist.`));
-      }
-    })
-    .then(() => {
-      return FindEmail(email).then(foundEmail => {
-        if (foundEmail == 'Email is already exist.') {
-          return Promise.reject(Error(`Email "${email}" is already exist.`));
-        }
-      });
-    })
-    .then(() => {
-      return models.users.create({
-        login: login,
-        password: password,
-        email: email,
-        verified: false
-      });
-    })
-    .then(() => {
-      return 'Successfuly created.';
-    })
-    .catch(err => {
-      SENTRY.captureMessage(err.message);
-      return err.message;
-    });
+async function CreateUser(login, password, email) {
+  let foudLogin = await FindLogin(login);
+  if (foudLogin == 'Login is already exist.') {
+    let message = `Login "${login}" is already exist.`;
+    SENTRY.captureMessage(message);
+    return message;
+  }
+
+  let foundEmail = await FindEmail(email);
+  if (foundEmail == 'Email is already exist.') {
+    let message = `Email "${email}" is already exist.`;
+    SENTRY.captureMessage(message);
+    return message;
+  }
+
+  await models.users.create({
+    login: login,
+    password: password,
+    email: email,
+    verified: false
+  });
+
+  return 'Successfuly created.';
 }
 
-function GetUser(login, password) {
-  return models.users
-    .findOne({
-      login: login,
-      password: password
-    })
-    .then(data => {
-      if (data == null) {
-        return 'User not found.';
-      } else {
-        return data;
-      }
-    })
-    .catch(err => {
-      SENTRY.captureException('DB find user error: ', err);
-    });
+async function GetUser(login, password) {
+  let data = await models.users.findOne({
+    login: login,
+    password: password
+  });
+
+  if (data == null) {
+    return 'User not found.';
+  } else {
+    return `{"login": "${data.login}", "email": "${data.email}", "verified": "${data.verified}"}`;
+  }
 }
 
-function SetEmailVerification(email) {
-  return models.users
-    .updateOne(
-      {
-        email: email
-      },
-      {
-        verified: true
-      }
-    )
-    .then(data => {
-      if (data.n == 0) {
-        SENTRY.captureMessage(`Email ${email} not found.`);
-        return `Email not found.`;
-      } else {
-        SENTRY.captureMessage(`${email} successfully verified.`);
-        return `${email} successfully verified.`;
-      }
-    })
-    .catch(err => {
-      SENTRY.captureException(`DB verification error: `, err);
-    });
-}
-
-function ChangeEmail(login, newEmail) {
-  return models.users
-    .updateOne(
-      {
-        login: login
-      },
-      {
-        email: newEmail,
-        verified: false
-      }
-    )
-    .then(data => {
-      if (data.n == 0) {
-        SENTRY.captureMessage(`User ${login} not found.`);
-        return `User not found.`;
-      } else {
-        SENTRY.captureMessage(`${login}'s email successfully changed.`);
-        return `Email successfully changed.`;
-      }
-    })
-    .catch(err => {
-      SENTRY.captureException(`DB email change error: `, err);
-    });
-}
-
-function ChangePassword(login, newPassword) {
-  return models.users
-    .updateOne(
-      {
-        login: login
-      },
-      {
-        password: newPassword
-      }
-    )
-    .then(data => {
-      if (data.n == 0) {
-        SENTRY.captureMessage(`User ${login} not found.`);
-        return `User not found.`;
-      } else {
-        SENTRY.captureMessage(`${login}'s password successfully changed.`);
-        return `Password successfully changed.`;
-      }
-    })
-    .catch(err => {
-      SENTRY.captureException('DB password change error: ', err);
-    });
-}
-
-function FindLogin(login) {
-  return models.users
-    .findOne({
-      login: login
-    })
-    .then(data => {
-      if (data == null) {
-        return 'Login not found.';
-      } else {
-        return 'Login is already exist.';
-      }
-    })
-    .catch(err => {
-      SENTRY.captureException('DB find login error: ', err);
-    });
-}
-
-function FindEmail(email) {
-  return models.users
-    .findOne({
+async function SetEmailVerification(email) {
+  let data = await models.users.updateOne(
+    {
       email: email
-    })
-    .then(data => {
-      if (data == null) {
-        return 'Email not found.';
-      } else {
-        return 'Email is already exist.';
-      }
-    })
-    .catch(err => {
-      SENTRY.captureException('DB find email error: ', err);
-    });
+    },
+    {
+      verified: true
+    }
+  );
+
+  if (data.n == 0) {
+    SENTRY.captureMessage(`Email ${email} not found.`);
+    return `Email not found.`;
+  } else {
+    SENTRY.captureMessage(`${email} successfully verified.`);
+    return `${email} successfully verified.`;
+  }
+}
+
+async function ChangeEmail(login, newEmail) {
+  let data = await models.users.updateOne(
+    {
+      login: login
+    },
+    {
+      email: newEmail,
+      verified: false
+    }
+  );
+
+  if (data.n == 0) {
+    SENTRY.captureMessage(`User ${login} not found.`);
+    return `User not found.`;
+  } else {
+    SENTRY.captureMessage(`${login}'s email successfully changed.`);
+    return `Email successfully changed.`;
+  }
+}
+
+async function ChangePassword(login, newPassword) {
+  let data = await models.users.updateOne(
+    {
+      login: login
+    },
+    {
+      password: newPassword
+    }
+  );
+
+  if (data.n == 0) {
+    SENTRY.captureMessage(`User ${login} not found.`);
+    return `User not found.`;
+  } else {
+    SENTRY.captureMessage(`${login}'s password successfully changed.`);
+    return `Password successfully changed.`;
+  }
+}
+
+async function FindLogin(login) {
+  let data = await models.users.findOne({
+    login: login
+  });
+
+  if (data == null) {
+    return 'Login not found.';
+  } else {
+    return 'Login is already exist.';
+  }
+}
+
+async function FindEmail(email) {
+  let data = await models.users.findOne({
+    email: email
+  });
+
+  if (data == null) {
+    return 'Email not found.';
+  } else {
+    return 'Email is already exist.';
+  }
 }
 
 module.exports = {
