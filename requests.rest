@@ -1,0 +1,58 @@
+POST http://localhost:10204/user/create
+Content-Type: application/json
+
+{
+    "login": "asd1",
+    "password": "qwe",
+    "email": "zxc1"
+}
+
+###
+
+GET http://localhost:10204/user/get
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MTUwMzQ5MSwiZXhwIjoxNTcxNTAzNTIxfQ.1SbJN5nR7YDPZZxafkUbfVEiRnB52FamCv9esH2u5lc
+
+###
+
+POST http://localhost:10204/user/changePassword
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MTUwMjM3MywiZXhwIjoxNTcxNTAyNDAzfQ.4KzadPMfBc-ZOU6qgY697v0zRs0IF_g8yoDIJ_8ta3U
+
+{
+    "newPassword": "qwe"
+}
+
+###
+
+POST http://localhost:10204/user/changeEmail
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MTUwMjM3MywiZXhwIjoxNTcxNTAyNDAzfQ.4KzadPMfBc-ZOU6qgY697v0zRs0IF_g8yoDIJ_8ta3U
+
+{
+    "newEmail": "zxc"
+}
+
+###
+
+POST http://localhost:10204/auth/login
+Content-Type: application/json
+
+{
+    "login": "asd",
+    "password": "qwe"
+}
+
+###
+
+POST http://localhost:10204/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MTUwMjM5OX0.GCIzfuyxbzlCWfvLNbvujliNbxYUbzGJATxkPKjvcpE"
+}
+
+###
+
+GET http://localhost:10204/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MTUwMTU3MCwiZXhwIjoxNTcxNTAxNjAwfQ.0cKQkM0_6gGWoQnLH9DtIVIIOZa66pEFzdV9R5ut44s
+###
