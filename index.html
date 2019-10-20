@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="player">
+        <div id="cover">Cover: Loading...</div>
+        <h3 id="title">Title: Loading...</h3>
+        <h3 id="artist">Artist: Loading...</h3>
+        <div id="audio-player"></div>
+        <button id="player-previous-button" onclick="GetNewSong(-1)">Back</button>
+        <button id="player-next-button" onclick="GetNewSong(1)">Next</button>
+    </div>
+
+    <script defer>
+        const musicUrl = 'http://localhost:10204/music/';
+        let songNum = 1;
+        let songIndex = -1;
+        let musicArray = [];
+        fetch(musicUrl + '/playlist').then(res => {
+            res.json().then(data => {
+                musicArray = data;
+
+                GetNewSong(1);
+            })
+        });
+
+
+        function GetNewSong(step = 1) {
+            if (songIndex + step >= musicArray.length) {
+                songIndex = 0
+            } else if (songIndex + step < 0) {
+                songIndex = 0
+            } else {
+                songIndex += step;
+            }
+
+            let songName = musicArray[songIndex];
+            let songUrl = `${musicUrl}play/${songName}/`;
+            // let songUrl = `https://dailyradio-server.herokuapp.com/music/play/${songName}/`;
+
+            fetch(songUrl + 'stats').then(res => {
+                res.json().then(songStats => {
+                    $('#title').html('Title: ' + songStats.title);
+                    $('#artist').html('Artist: ' + songStats.artist);
+                    if (songStats.picture) {
+                        $('#cover').html(`<img src="${_imageEncode(songStats.picture.data.data)}" height="200px" width="200px">`);
+                        // $('#cover').html(`<img src="data:image/jpeg;base64,${btoa(songStats.picture.data.data)}">`);
+                        // $('#cover').html('<b>ASD</b>');
+                        console.log(songStats.picture);
+                        console.log(songStats.picture.data.data);
+                        console.log(`"${btoa(songStats.picture.data)}"`);
+                    }
+                });
+            });
+
+            $('#audio-player').html(
+                `<audio controls="controls" autoplay="true"><source src="${songUrl}" type="audio/mpeg" />Your browser does not support the audio element.</audio>`
+            );
+            $('audio').bind(' ended ', () => { GetNewSong(1) });
+        }
+
+        function _imageEncode(arrayBuffer) {
+            let u8 = new Uint8Array(arrayBuffer)
+            let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer), function (p, c) { return p + String.fromCharCode(c) }, ''))
+            let mimetype = "image/jpeg"
+            return "data:" + mimetype + ";base64," + b64encoded
+        }
+    </script>
+</body>
+
+</html>
