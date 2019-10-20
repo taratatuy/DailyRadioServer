@@ -3,12 +3,6 @@ const MM = require('music-metadata');
 const fs = require('fs');
 const util = require('util');
 
-// const filePath = './Music/';
-// const stat = fs.statSync(filePath);
-
-// const { SENTRY } = require('../config.js');
-// const database = require('../database');
-
 const readDirP = util.promisify(fs.readdir);
 const router = express.Router();
 
@@ -48,7 +42,5 @@ router.get('/play/:name/stats', (req, res) => {
       console.error(err.message);
     });
 });
-
-// function getMusicStream() {}
 
 module.exports = router;
