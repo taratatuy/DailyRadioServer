@@ -1,6 +1,6 @@
 {
   "name": "daily_radio_server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Simple node.js sever for radio app",
   "main": "app.js",
   "scripts": {
