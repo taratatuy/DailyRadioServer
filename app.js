@@ -5,6 +5,7 @@ const routes = require('./routes');
 
 const app = express();
 
+app.use(express.static(__dirname + '/public/musicDatabase'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,6 +16,10 @@ app.use(function(req, res, next) {
     'Origin, X-Requested-With, Content-Type, Accept'
   );
   next();
+});
+
+app.use('/dbmusic', (req, res) => {
+  res.sendFile(__dirname + '/public/musicDatabase/index.html');
 });
 
 app.use('/auth', routes.authorization);

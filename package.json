@@ -13,6 +13,7 @@
     "@sentry/node": "^5.6.2",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
+    "formidable": "^1.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
     "music-metadata": "^4.8.1"
