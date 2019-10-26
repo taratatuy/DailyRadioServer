@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const models = require('../models');
 
 async function CreateUser(login, password, email) {
@@ -10,9 +11,11 @@ async function CreateUser(login, password, email) {
   const foundEmail = await FindEmail(email);
   if (foundEmail) return `Email "${email}" is already exist.`;
 
+  let hashPassword = await bcrypt.hash(password, 10);
+
   await models.users.create({
     login: login,
-    password: password,
+    password: hashPassword,
     email: email,
     verified: false
   });
@@ -106,12 +109,13 @@ async function Verification(login, password) {
   password = password.toLowerCase();
 
   const data = await models.users.findOne({
-    login: login,
-    password: password
+    login: login
   });
 
-  if (data) return true;
-  return false;
+  if (!data) return false;
+
+  let hash = await bcrypt.compare(password, data.password);
+  return hash;
 }
 
 const methods = {
