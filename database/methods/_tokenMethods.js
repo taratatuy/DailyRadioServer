@@ -13,11 +13,8 @@ async function SetRefreshToken(login, refreshToken) {
     }
   );
 
-  if (data.n == 0) {
-    return false;
-  } else {
-    return true;
-  }
+  if (data.n == 0) return false;
+  return true;
 }
 
 async function GetRefreshToken(login) {

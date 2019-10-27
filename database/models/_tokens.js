@@ -12,8 +12,6 @@ const token = new Schema({
   }
 });
 
-token.set('toJSON', {
-  virtuals: true
-});
+token.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('TokenModel', token);

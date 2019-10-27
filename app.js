@@ -25,5 +25,6 @@ app.use('/dbmusic', (req, res) => {
 app.use('/auth', routes.authorization);
 app.use('/user', routes.user);
 app.use('/music', routes.music);
+app.use('/favorites', routes.favorites);
 
 app.listen(config.PORT, console.log(`Listening on port ${config.PORT}`));

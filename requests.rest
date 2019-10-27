@@ -55,4 +55,30 @@ Content-Type: application/json
 
 GET http://localhost:10204/auth/logout
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MTUwMTU3MCwiZXhwIjoxNTcxNTAxNjAwfQ.0cKQkM0_6gGWoQnLH9DtIVIIOZa66pEFzdV9R5ut44s
+
+###
+
+GET http://localhost:10204/favorites/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MjE5ODkxMywiZXhwIjoxNTcyMTk4OTQzfQ.ytJWidGYhebwCObWys9SESVanv8Kx76-eF5xS_B3DFI
+
+###
+
+POST http://localhost:10204/favorites/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MjE5ODg3NywiZXhwIjoxNTcyMTk4OTA3fQ.VuU9VhPqZngRF5HTsUj-6ptkqZTqnyMgfXOESsJJ0uo
+
+{
+    "song": "some song name1"
+}
+
+###
+
+POST http://localhost:10204/favorites/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFzZCIsImlhdCI6MTU3MjE5ODkxMywiZXhwIjoxNTcyMTk4OTQzfQ.ytJWidGYhebwCObWys9SESVanv8Kx76-eF5xS_B3DFI
+
+{
+    "song": "some song name1"
+}
+
 ###
