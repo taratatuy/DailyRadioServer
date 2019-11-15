@@ -12,6 +12,7 @@
   "dependencies": {
     "@sentry/node": "^5.6.2",
     "bcrypt": "^3.0.6",
+    "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
     "formidable": "^1.2.1",

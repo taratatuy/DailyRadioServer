@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const config = require('./config.js');
 const routes = require('./routes');
@@ -9,18 +10,11 @@ app.use(express.static(__dirname + '/public/musicDatabase'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
-
 app.use('/dbmusic', (req, res) => {
   res.sendFile(__dirname + '/public/musicDatabase/index.html');
 });
+
+app.use(cors());
 
 app.use('/auth', routes.authorization);
 app.use('/user', routes.user);
